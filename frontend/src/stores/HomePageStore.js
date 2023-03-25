@@ -8,11 +8,23 @@ export const useHomePageStore = defineStore("homePageStore", {
       trending: { data: [], loading: true },
       popular: { data: [], loading: true },
       topRated: { data: [], loading: true },
-      vedio: {data: [], loading: true}
+      vedio: {data: [], urls: [], loading: true}
     };
   },
   actions: {
     //GET
+    fetchVedio(id){
+      axios.get(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY_VALUE
+          }&language=en-US`)
+          .then((res)=>{
+            if (res.data.results.length){
+              this.vedio.urls.push(`${import.meta.env.VITE_TMDB_YOUTUBE_PATH}${res.data.results[0]?.key}`)
+              // console.log('urls: ', this.vedio.urls);
+            }
+            else
+              this.vedio.data = this.vedio.data.filter((ele)=> ele.id !== id)
+          })
+    },
     fetchTrending(media_type, time_window) {
       this.trending.loading = true;
       axios
@@ -40,7 +52,11 @@ export const useHomePageStore = defineStore("homePageStore", {
         .then((res) => {
           this.popular.data = res.data.results;
           if (type === 'tv'){
-            this.vedio.data = res.data.results;
+            this.vedio.data = res.data.results.filter((ele)=> ele.backdrop_path);
+            for (const key in this.vedio.data){
+              this.fetchVedio(this.vedio.data[key].id)
+            }
+            // console.log('data: ', this.vedio.data);
           }
         })
         .catch((err) => {

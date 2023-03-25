@@ -17,12 +17,13 @@ const state = reactive({
   base_url: import.meta.env.VITE_TMDB_BASE_URL,
   size: "original",
   loading: true,
-  url: `${import.meta.env.VITE_TMDB_BASE_URL}original${homePageStore.vedio.data.backdrop_path}`
+  index: 0
     ,
   });
   
-  const vedioPosterHover = (path) => {
-    state.url = `${state.base_url}${state.size}${path}`;
+  const vedioPosterHover = (index) => {
+    state.index = index;
+    console.log(homePageStore.vedio.data[index]);
   };
 
 // fetch movies
@@ -40,15 +41,15 @@ homePageStore.fetchPopular("tv");
     <ScrolBox>
       <div
         :class="`vedioCard ${!state.loading && 'hide'}`"
-        v-for="vedio in homePageStore.vedio.data"
-        :key="vedio.title"
+        v-for="(vedio, index) in homePageStore.vedio.data"
+        :key="vedio.name"
       >
         <div class="imageCard">
           <img
             class="vedioPoster"
             :src="`${state.base_url}${state.size}${vedio.backdrop_path}`"
             alt="movie poster"
-            @mouseover="vedioPosterHover(vedio.backdrop_path)"
+            @mouseover="vedioPosterHover(index)"
           />
           <img
             class="tree_points"
@@ -57,14 +58,14 @@ homePageStore.fetchPopular("tv");
           />
           <ion-icon name="play" class="play_btn"></ion-icon>
         </div>
-        <h2 class="movieTitle">{{ vedio.title }}</h2>
-        <p>{{ vedio.text }}</p>
+        <h2 class="movieTitle">{{ vedio.name }}</h2>
+        <p>{{ vedio.first_air_date }}</p>
       </div>
     </ScrolBox>
-    <!-- <div
+    <div
       class="backGround"
-      :style="`background-image: linear-gradient(to right, rgba(var(--tmdbDarkBlue), 0.75) 0%, rgba(var(--tmdbDarkBlue), 0.75) 100%), url(${state.url})`"
-    ></div> -->
+      :style="`background-image: linear-gradient(to right, rgba(var(--tmdbDarkBlue), 0.75) 0%, rgba(var(--tmdbDarkBlue), 0.75) 100%), url(${state.base_url}${state.size}${homePageStore.vedio.data[state.index]?.backdrop_path})`"
+    ></div>
   </div>
 </template>
 
