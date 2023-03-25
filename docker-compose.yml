@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    container_name: db
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=tmdb
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./deployments/backend/Dockerfile
+    container_name: backend
+    volumes:
+      - "./backend:/app"
+      - "/app/node_modules"
+    ports:
+      - 3000:3000
+      - 5555:5555
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./deployments/frontend/Dockerfile
+    container_name: frontend
+    volumes:
+      - "./frontend:/app"
+      - "/app/node_modules"
+    ports:
+      - 5173:5173
+    depends_on:
+      - backend
+
+volumes:
+  db:
+    driver: local
