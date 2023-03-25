@@ -17,14 +17,20 @@ const state = reactive({
   base_url: import.meta.env.VITE_TMDB_BASE_URL,
   size: "original",
   loading: true,
-  index: 0
-    ,
-  });
-  
-  const vedioPosterHover = (index) => {
-    state.index = index;
-    console.log(homePageStore.vedio.data[index]);
-  };
+  index: 0,
+  vedioPlay: false,
+  vedioIndex: 0,
+});
+
+const vedioPosterHover = (index) => {
+  state.index = index;
+  console.log(homePageStore.vedio.data[index]);
+};
+
+const vedioPosterClick = (index) => {
+  state.vedioIndex = index;
+  state.vedioPlay = true;
+};
 
 // fetch movies
 homePageStore.fetchPopular("tv");
@@ -44,7 +50,7 @@ homePageStore.fetchPopular("tv");
         v-for="(vedio, index) in homePageStore.vedio.data"
         :key="vedio.name"
       >
-        <div class="imageCard">
+        <div class="imageCard" @click="vedioPosterClick(index)">
           <img
             class="vedioPoster"
             :src="`${state.base_url}${state.size}${vedio.backdrop_path}`"
@@ -64,12 +70,63 @@ homePageStore.fetchPopular("tv");
     </ScrolBox>
     <div
       class="backGround"
-      :style="`background-image: linear-gradient(to right, rgba(var(--tmdbDarkBlue), 0.75) 0%, rgba(var(--tmdbDarkBlue), 0.75) 100%), url(${state.base_url}${state.size}${homePageStore.vedio.data[state.index]?.backdrop_path})`"
+      :style="`background-image: linear-gradient(to right, rgba(var(--tmdbDarkBlue), 0.75) 0%, rgba(var(--tmdbDarkBlue), 0.75) 100%), url(${
+        state.base_url
+      }${state.size}${homePageStore.vedio.data[state.index]?.backdrop_path})`"
     ></div>
+    <Teleport to="body">
+      <div class="vedio_wrap" v-if="state.vedioPlay">
+        <div class="vedio_close" @click="state.vedioPlay = false">
+          <iframe
+            width="1280"
+            height="720"
+            :src="`https://www.youtube.com/embed/${
+              homePageStore.vedio.urls[state.vedioIndex]
+            }?autoplay=1`"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
 <style scoped>
+.vedio_close {
+  width: 128rem;
+  position: relative;
+  cursor: pointer;
+}
+.vedio_close::after {
+  content: "x";
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: hsla(0, 0%, 100%, 0.3);
+  color: #fff;
+  border-radius: 50%;
+  height: 3.8rem;
+  width: 3.8rem;
+  font-size: 2.4rem;
+  text-align: center;
+}
+.vedio_wrap {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+}
 .container {
   position: relative;
 }

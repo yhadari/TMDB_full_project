@@ -14,32 +14,32 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=tmdb
 
-  backend:
-    build:
-      context: .
-      dockerfile: ./deployments/backend/Dockerfile
-    container_name: backend
-    volumes:
-      - "./backend:/app"
-      - "/app/node_modules"
-    ports:
-      - 3000:3000
-      - 5555:5555
-    depends_on:
-      - db
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./deployments/backend/Dockerfile
+  #   container_name: backend
+  #   volumes:
+  #     - "./backend:/app"
+  #     - "/app/node_modules"
+  #   ports:
+  #     - 3000:3000
+  #     - 5555:5555
+  #   depends_on:
+  #     - db
 
-  frontend:
-    build:
-      context: .
-      dockerfile: ./deployments/frontend/Dockerfile
-    container_name: frontend
-    volumes:
-      - "./frontend:/app"
-      - "/app/node_modules"
-    ports:
-      - 5173:5173
-    depends_on:
-      - backend
+  # frontend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./deployments/frontend/Dockerfile
+  #   container_name: frontend
+  #   volumes:
+  #     - "./frontend:/app"
+  #     - "/app/node_modules"
+  #   ports:
+  #     - 5173:5173
+  #   depends_on:
+  #     - backend
 
 volumes:
   db:

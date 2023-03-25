@@ -5,14 +5,13 @@ import MoviesCard from "../components/MoviesCard.vue";
 import VediosBox from "../components/VediosBox.vue";
 import JoinBox from "../components/JoinBox.vue";
 import LeaderBoard from "../components/LeaderBoard.vue";
-
 </script>
 
 <template>
   <div class="container">
     <BienvenueBox class="bienvenueBox" />
     <Wrap2022 class="wrap22" />
-    <MoviesCard class="moviesCard trending" type="trending"/>
+    <MoviesCard class="moviesCard trending" type="trending" />
     <VediosBox class="vedioBox" />
     <MoviesCard class="moviesCard" type="popular" />
     <MoviesCard class="moviesCard" type="top_rated" />
