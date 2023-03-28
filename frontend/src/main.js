@@ -4,10 +4,6 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/main.css";
 
-// plyr
-import VuePlyr from "vue-plyr";
-import "vue-plyr/dist/vue-plyr.css";
-
 // PrimeVue
 import PrimeVue from "primevue/config";
 import "primeicons/primeicons.css ";
@@ -24,7 +20,6 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 app.use(PrimeVue);
-app.use(VuePlyr);
 
 app.component("InputText", InputText);
 app.component("Button", Button);

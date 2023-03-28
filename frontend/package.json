@@ -16,7 +16,6 @@
     "primevue": "^3.23.0",
     "vite-plugin-full-reload": "^1.0.5",
     "vue": "^3.2.47",
-    "vue-plyr": "^7.0.0",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 <script setup>
-import LinkItem from './LinkItem.vue'
+import LinkItem from "./LinkItem.vue";
 </script>
 
 <template>
@@ -16,7 +16,7 @@ import LinkItem from './LinkItem.vue'
         { name: 'Populaires', to: '/movie' },
         { name: 'Du moment', to: '/movie/now-playing' },
         { name: 'À venir', to: '/movie/upcoming' },
-        { name: 'Les mieux notés', to: '/movie/top-rated' }
+        { name: 'Les mieux notés', to: '/movie/top-rated' },
       ]"
       type="left"
     />
@@ -26,18 +26,22 @@ import LinkItem from './LinkItem.vue'
         { name: 'Populaires', to: '/tv' },
         { name: 'Diffusées aujourd’hui', to: '/tv/airing-today' },
         { name: 'En cours de diffusion', to: '/tv/on-the-air' },
-        { name: 'Les mieux notées', to: '/tv/top-rated' }
+        { name: 'Les mieux notées', to: '/tv/top-rated' },
       ]"
       type="left"
     />
-    <LinkItem name="People" :links="[{ name: 'Populaires', to: '/person' }]" type="left" />
+    <LinkItem
+      name="People"
+      :links="[{ name: 'Populaires', to: '/person' }]"
+      type="left"
+    />
     <LinkItem
       name="More"
       :links="[
         { name: 'Conversations', to: '/discuss' },
         { name: 'Top contributions', to: '/leaderboard' },
         { name: 'Assistance', to: '/talk' },
-        { name: 'API', to: '/api' }
+        { name: 'API', to: '/api' },
       ]"
       type="left"
     />
