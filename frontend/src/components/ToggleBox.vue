@@ -48,7 +48,7 @@ const handleClick = (toggle) => {
       } else if (props.type === "top_rated") {
         homePageStore.fetchTopRated(toggle.type);
       } else if (props.type === "vedio") {
-        homePageStore.fetchPopular(toggle.type, "trailers");
+        homePageStore.fetchTrailers(toggle.type);
       }
     }, 800);
     props.toggle.forEach((ele) => {

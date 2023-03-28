@@ -13,19 +13,43 @@ export const useHomePageStore = defineStore("homePageStore", {
   },
   actions: {
     //GET
-    fetchVedio(id, type) {
+    fetchTrailers(type) {
+      this.vedio.loading = true;
       axios
         .get(
-          `https://api.themoviedb.org/3/${type}/${id}/videos?api_key=${
+          `https://api.themoviedb.org/3/${type}/popular?api_key=${
             import.meta.env.VITE_TMDB_KEY_VALUE
-          }&language=en-US`
+          }&language=en-US&page=1`
         )
         .then((res) => {
-          if (res.data.results.length) {
-            this.vedio.urls.push(res.data.results[0]?.key);
-            this.vedio.names.push(res.data.results[0]?.name);
-          } else
-            this.vedio.data = this.vedio.data.filter((ele) => ele.id !== id);
+          this.vedio.data = res.data.results.filter((ele) => ele.backdrop_path);
+          this.vedio.urls = [];
+          this.vedio.names = [];
+          for (const key in this.vedio.data) {
+            axios
+              .get(
+                `https://api.themoviedb.org/3/${type}/${
+                  this.vedio.data[key].id
+                }/videos?api_key=${
+                  import.meta.env.VITE_TMDB_KEY_VALUE
+                }&language=en-US`
+              )
+              .then((res) => {
+                if (res.data.results.length) {
+                  this.vedio.urls.push(res.data.results[0]?.key);
+                  this.vedio.names.push(res.data.results[0]?.name);
+                } else
+                  this.vedio.data = this.vedio.data.filter(
+                    (ele) => ele.id !== id
+                  );
+              });
+          }
+        })
+        .catch((err) => {
+          console.log("error: ", err);
+        })
+        .finally(() => {
+          this.vedio.loading = false;
         });
     },
     fetchTrending(media_type, time_window) {
@@ -56,16 +80,6 @@ export const useHomePageStore = defineStore("homePageStore", {
         )
         .then((res) => {
           this.popular.data = res.data.results;
-          if (trailers !== "") {
-            this.vedio.data = res.data.results.filter(
-              (ele) => ele.backdrop_path
-            );
-            this.vedio.urls = [];
-            this.vedio.names = [];
-            for (const key in this.vedio.data) {
-              this.fetchVedio(this.vedio.data[key].id, type);
-            }
-          }
         })
         .catch((err) => {
           console.log("error: ", err);

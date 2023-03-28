@@ -32,7 +32,7 @@ const vedioPosterClick = (index) => {
   state.vedioPlay = true;
 };
 
-homePageStore.fetchPopular("movie", "trailers");
+homePageStore.fetchTrailers("movie");
 </script>
 
 <template>
@@ -49,7 +49,14 @@ homePageStore.fetchPopular("movie", "trailers");
         v-for="(vedio, index) in homePageStore.vedio.data"
         :key="vedio.name"
       >
-        <div class="imageCard" @click="vedioPosterClick(index)">
+        <div class="loading" v-if="homePageStore.vedio.loading">
+          <img src="../assets/Rolling.svg" alt="loading" />
+        </div>
+        <div
+          class="imageCard"
+          @click="vedioPosterClick(index)"
+          v-if="!homePageStore.vedio.loading"
+        >
           <img
             class="vedioPoster"
             :src="`${state.base_url}${state.size}${vedio.backdrop_path}`"
@@ -63,8 +70,10 @@ homePageStore.fetchPopular("movie", "trailers");
           />
           <ion-icon name="play" class="play_btn"></ion-icon>
         </div>
-        <h2 class="movieTitle">{{ vedio.name || vedio.title }}</h2>
-        <h3>{{ homePageStore.vedio.names[index] }}</h3>
+        <div v-if="!homePageStore.vedio.loading">
+          <h2 class="movieTitle">{{ vedio.name || vedio.title }}</h2>
+          <h3>{{ homePageStore.vedio.names[index] }}</h3>
+        </div>
       </div>
     </ScrolBox>
     <div
@@ -125,6 +134,7 @@ homePageStore.fetchPopular("movie", "trailers");
   left: 0;
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: grayscale(0.4) blur(0.8rem);
 }
 .container {
   position: relative;
@@ -206,5 +216,15 @@ homePageStore.fetchPopular("movie", "trailers");
   left: 0;
   width: 100%;
   height: 100%;
+}
+.loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading img {
+  width: 8rem;
+  opacity: 0.5;
 }
 </style>
