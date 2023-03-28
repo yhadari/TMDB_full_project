@@ -32,8 +32,7 @@ const vedioPosterClick = (index) => {
   state.vedioPlay = true;
 };
 
-// fetch movies
-homePageStore.fetchPopular("tv");
+homePageStore.fetchPopular("movie", "trailers");
 </script>
 
 <template>
@@ -64,8 +63,8 @@ homePageStore.fetchPopular("tv");
           />
           <ion-icon name="play" class="play_btn"></ion-icon>
         </div>
-        <h2 class="movieTitle">{{ vedio.name }}</h2>
-        <p>{{ vedio.first_air_date }}</p>
+        <h2 class="movieTitle">{{ vedio.name || vedio.title }}</h2>
+        <h3>{{ homePageStore.vedio.names[index] }}</h3>
       </div>
     </ScrolBox>
     <div

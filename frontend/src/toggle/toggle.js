@@ -58,18 +58,22 @@ export const topRatedToggle = ref([
 export const vedioToggle = ref([
   {
     name: "Streaming",
+    type: "movie",
     clicked: true,
   },
   {
     name: "On TV",
+    type: "tv",
     clicked: false,
   },
   {
     name: "For Rent",
+    type: "movie",
     clicked: false,
   },
   {
     name: "In Theaters",
+    type: "tv",
     clicked: false,
   },
 ]);

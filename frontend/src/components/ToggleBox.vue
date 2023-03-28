@@ -1,58 +1,63 @@
 <script setup>
-import { computed } from 'vue'
-import { useHomePageStore } from '@/stores/HomePageStore'
-const homePageStore = useHomePageStore()
+import { computed } from "vue";
+import { useHomePageStore } from "@/stores/HomePageStore";
+const homePageStore = useHomePageStore();
 
 // props
 const props = defineProps({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   toggle: {
     type: Array,
-    required: true
+    required: true,
   },
   type: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 //emits
-const emits = defineEmits(['loading'])
+const emits = defineEmits(["loading"]);
 
 // methods
 const clickedBtn = computed(() => {
-  return props.type === 'vedio' ? 'vedio_btn' : 'movie_btn'
-})
+  return props.type === "vedio" ? "vedio_btn" : "movie_btn";
+});
 
 const ScrollToLeft = () => {
-  let content = document.querySelectorAll('.scrollBox')
+  let content = document.querySelectorAll(".scrollBox");
   content.forEach((userItem) => {
-    userItem.scrollLeft = 0
-  })
-}
+    userItem.scrollLeft = 0;
+  });
+};
 const handleClick = (toggle) => {
   if (toggle.clicked !== true) {
     setTimeout(() => {
-      emits('loading', true)
-      ScrollToLeft()
-      if (props.type === 'trending') {
-        homePageStore.fetchTrending(toggle.type.media_type, toggle.type.time_window)
-      } else if (props.type === 'popular') {
-        homePageStore.fetchPopular(toggle.type)
-      } else if (props.type === 'top_rated') {
-        homePageStore.fetchTopRated(toggle.type)
+      emits("loading", true);
+      ScrollToLeft();
+      if (props.type === "trending") {
+        homePageStore.fetchTrending(
+          toggle.type.media_type,
+          toggle.type.time_window
+        );
+      } else if (props.type === "popular") {
+        homePageStore.fetchPopular(toggle.type);
+      } else if (props.type === "top_rated") {
+        homePageStore.fetchTopRated(toggle.type);
+      } else if (props.type === "vedio") {
+        homePageStore.fetchPopular(toggle.type, "trailers");
       }
-    }, 800)
+    }, 800);
     props.toggle.forEach((ele) => {
-      ele.clicked = false
-    })
-    toggle.clicked = true
-    emits('loading', false)
+      ele.clicked = false;
+    });
+    toggle.clicked = true;
+    emits("loading", false);
   }
-}
+};
 </script>
 
 <template>
@@ -64,7 +69,10 @@ const handleClick = (toggle) => {
       }`"
     >
       <div v-for="toggle in props.toggle" :key="toggle.name">
-        <button @click="handleClick(toggle)" :class="`${toggle.clicked ? clickedBtn : ''}`">
+        <button
+          @click="handleClick(toggle)"
+          :class="`${toggle.clicked ? clickedBtn : ''}`"
+        >
           {{ toggle.name }}
         </button>
       </div>
