@@ -8,7 +8,7 @@ export const useHomePageStore = defineStore("homePageStore", {
       trending: { data: [], loading: true },
       popular: { data: [], loading: true },
       topRated: { data: [], loading: true },
-      vedio: { data: [], urls: [], names: [], loading: true },
+      vedio: { data: [], urls: [], names: [], arr: [], loading: true },
     };
   },
   actions: {
@@ -25,6 +25,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           this.vedio.data = res.data.results.filter((ele) => ele.backdrop_path);
           this.vedio.urls = [];
           this.vedio.names = [];
+          this.vedio.arr = [];
           for (const key in this.vedio.data) {
             axios
               .get(
@@ -36,12 +37,14 @@ export const useHomePageStore = defineStore("homePageStore", {
               )
               .then((res) => {
                 if (res.data.results.length) {
-                  this.vedio.urls.push(res.data.results[0]?.key);
-                  this.vedio.names.push(res.data.results[0]?.name);
-                } else
-                  this.vedio.data = this.vedio.data.filter(
-                    (ele) => ele.id !== id
-                  );
+                  if (
+                    !this.vedio.data[key].title?.toLowerCase().includes("porn")
+                  ) {
+                    this.vedio.urls.push(res.data.results[0].key);
+                    this.vedio.names.push(res.data.results[0]?.name);
+                    this.vedio.arr.push(this.vedio.data[key]);
+                  }
+                }
               });
           }
         })
@@ -50,6 +53,7 @@ export const useHomePageStore = defineStore("homePageStore", {
         })
         .finally(() => {
           this.vedio.loading = false;
+          console.log("data: ", this.vedio);
         });
     },
     fetchTrending(media_type, time_window) {
@@ -70,7 +74,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           this.trending.loading = false;
         });
     },
-    fetchPopular(type, trailers = "") {
+    fetchPopular(type) {
       this.popular.loading = true;
       axios
         .get(

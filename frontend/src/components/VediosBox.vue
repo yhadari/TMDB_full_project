@@ -24,7 +24,7 @@ const state = reactive({
 
 const vedioPosterHover = (index) => {
   state.index = index;
-  console.log(homePageStore.vedio.data[index]);
+  console.log(homePageStore.vedio.arr[index]);
 };
 
 const vedioPosterClick = (index) => {
@@ -46,7 +46,7 @@ homePageStore.fetchTrailers("movie");
     <ScrolBox>
       <div
         :class="`vedioCard ${!state.loading && 'hide'}`"
-        v-for="(vedio, index) in homePageStore.vedio.data"
+        v-for="(vedio, index) in homePageStore.vedio.arr"
         :key="vedio.name"
       >
         <div class="loading" v-if="homePageStore.vedio.loading">
@@ -80,7 +80,7 @@ homePageStore.fetchTrailers("movie");
       class="backGround"
       :style="`background-image: linear-gradient(to right, rgba(var(--tmdbDarkBlue), 0.75) 0%, rgba(var(--tmdbDarkBlue), 0.75) 100%), url(${
         state.base_url
-      }${state.size}${homePageStore.vedio.data[state.index]?.backdrop_path})`"
+      }${state.size}${homePageStore.vedio.arr[state.index]?.backdrop_path})`"
     ></div>
     <Teleport to="body">
       <div class="vedio_wrap" v-if="state.vedioPlay">

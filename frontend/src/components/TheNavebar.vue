@@ -45,12 +45,12 @@ nav {
 }
 .hide {
   animation-name: hideNav;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 .show {
   animation-name: showNav;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 @keyframes hideNav {
