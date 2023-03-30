@@ -24,7 +24,7 @@ const router = createRouter({
       name: "movie",
     },
     {
-      path: "/movie/:param",
+      path: "/:type/:param",
       name: "movie-param",
       component: () => import("@/views/MoviePageView.vue"),
     },
@@ -43,11 +43,11 @@ const router = createRouter({
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { top: 0 }
+      return { top: 0 };
     }
-  }
+  },
 });
 
 export default router;

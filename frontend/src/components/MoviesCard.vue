@@ -59,14 +59,14 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 </script>
 
 <template>
-  <div class="container">
+  <div class="container test">
     <ToggleBox
       :title="title"
       :type="type"
       :toggle="toggle.value"
       @loading="loading"
     />
-    <ScrolBox>
+    <ScrolBox :type="type">
       <div
         :class="`movieCard ${!state.loading && 'hide'}`"
         v-for="movie in movies.data"
@@ -103,7 +103,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 </template>
 
 <style scoped>
-.container::after {
+.test::after {
   position: absolute;
   top: 0;
   right: 0;

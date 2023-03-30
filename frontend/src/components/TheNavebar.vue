@@ -3,7 +3,7 @@ import NavItemLeft from "./NavItemLeft.vue";
 import NavItemRight from "./NavItemRight.vue";
 
 let previousScrollPosition = 0;
-window.addEventListener("scroll", () => {
+document.addEventListener("scroll", () => {
   const content = document.querySelector(".content");
   if (window.scrollY > previousScrollPosition) {
     previousScrollPosition = window.scrollY;

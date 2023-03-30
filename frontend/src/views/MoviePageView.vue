@@ -16,6 +16,7 @@ const state = reactive({
   director: "",
   character: "",
   writer: "",
+  creator: "",
   runtime: {},
 });
 
@@ -26,10 +27,16 @@ const getId = () => {
   return id;
 };
 
+const getType = () => {
+  const type = router.currentRoute.value.params.type;
+  return type;
+};
+
 const getCast = (crew) => {
   state.director = crew.find((ele) => ele.job === "Director")?.original_name;
   state.character = crew.find((ele) => ele.job === "Characters")?.original_name;
   state.writer = crew.find((ele) => ele.job === "Writer")?.name;
+  state.creator = crew.find((ele) => ele.job === "Executive Producer")?.name;
 };
 
 const toHoursAndMinutes = (totalMinutes) => {
@@ -40,24 +47,15 @@ const toHoursAndMinutes = (totalMinutes) => {
 };
 
 // Fetch movie details
-await moviePageStore.fetchMovieDetails(getId());
-console.log(moviePageStore.movieDetails);
+await moviePageStore.fetchMovieDetails(getId(), getType());
+console.log("res: ", moviePageStore.movieDetails);
 
 toHoursAndMinutes(moviePageStore.movieDetails.runtime);
 
-await moviePageStore.fetchMovieCredits(getId());
+await moviePageStore.fetchMovieCredits(getId(), getType());
 console.log("credits: ", moviePageStore.movieCredits.cast);
 
 getCast(moviePageStore.movieCredits.crew);
-
-// try {
-//   await moviePageStore.fetchUsername()
-// } catch (error) {
-//   console.log('error: ', error.response.status)
-//   if (error.response.status !== 200) {
-//     router.push('/login')
-//   }
-// }
 </script>
 <template>
   <div class="container">
@@ -127,9 +125,15 @@ getCast(moviePageStore.movieCredits.crew);
           <div class="movie_details">
             <div>
               <h1 class="m_title">
-                {{ moviePageStore.movieDetails.title }}
+                {{
+                  moviePageStore.movieDetails.title ||
+                  moviePageStore.movieDetails.name
+                }}
                 <span class="m_date"
-                  >({{ moviePageStore.movieDetails.release_date }})</span
+                  >({{
+                    moviePageStore.movieDetails.release_date ||
+                    moviePageStore.movieDetails.first_air_date
+                  }})</span
                 >
               </h1>
               <div class="m_genres">
@@ -141,8 +145,8 @@ getCast(moviePageStore.movieCredits.crew);
                   {{ item.name }},
                 </div>
                 *
-                <p class="m_runtime">
-                  {{ state.runtime.hours }}h {{ state.runtime.minutes }}m
+                <p class="m_runtime" v-if="state.runtime.hours">
+                  {{ state.runtime?.hours }}h {{ state.runtime.minutes }}m
                 </p>
               </div>
             </div>
@@ -165,6 +169,10 @@ getCast(moviePageStore.movieCredits.crew);
               <div v-if="state.writer">
                 <h3 class="m_writer">{{ state.writer }}</h3>
                 <p>Writer</p>
+              </div>
+              <div v-if="state.creator">
+                <h3 class="m_writer">{{ state.creator }}</h3>
+                <p>Creator</p>
               </div>
             </div>
           </div>
@@ -264,7 +272,7 @@ getCast(moviePageStore.movieCredits.crew);
   width: 100rem;
   color: #fff;
   font-size: 1.6rem;
-  gap: 2.2rem;
+  gap: 2.6rem;
 }
 .m_title {
   font-size: 3.6rem;
@@ -289,10 +297,9 @@ getCast(moviePageStore.movieCredits.crew);
   color: #eee;
 }
 .m_cast {
-  display: flex;
-}
-.m_cast div:not(:last-child) {
-  margin-right: 18rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
 }
 .m_cast p {
   color: #eee;

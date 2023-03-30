@@ -1,7 +1,15 @@
-<script setup></script>
+<script setup>
+//props
+const props = defineProps({
+  type: {
+    type: String,
+    required: true,
+  },
+});
+</script>
 <template>
   <div class="Cards">
-    <div class="scrollBox">
+    <div :class="`scrollBox ${props.type}`">
       <slot />
     </div>
   </div>

@@ -28,11 +28,13 @@ const clickedBtn = computed(() => {
 });
 
 const ScrollToLeft = () => {
-  let content = document.querySelectorAll(".scrollBox");
+  let content = document.querySelectorAll(`.${props.type}`);
+  console.log("content: ", content);
   content.forEach((userItem) => {
     userItem.scrollLeft = 0;
   });
 };
+
 const handleClick = (toggle) => {
   if (toggle.clicked !== true) {
     setTimeout(() => {

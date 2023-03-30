@@ -43,7 +43,7 @@ homePageStore.fetchTrailers("movie");
       :toggle="vedioToggle"
       @loading="loading"
     />
-    <ScrolBox>
+    <ScrolBox type="vedio">
       <div
         :class="`vedioCard ${!state.loading && 'hide'}`"
         v-for="(vedio, index) in homePageStore.vedio.arr"

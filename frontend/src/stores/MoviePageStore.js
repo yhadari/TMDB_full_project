@@ -1,39 +1,44 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from "pinia";
+import axios from "axios";
 
-export const useMoviePageStore = defineStore('moviePageStore', {
+export const useMoviePageStore = defineStore("moviePageStore", {
   state: () => {
     return {
       movieDetails: {},
       movieCredits: {},
-      username: '',
-      loading: true
+      username: "",
+      loading: true,
     };
   },
   actions: {
     // GET
-    async fetchMovieCredits(movieId) {
+    async fetchMovieCredits(movieId, type) {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${import.meta.env.VITE_TMDB_KEY_VALUE}&language=en-US`
-        )
+          `https://api.themoviedb.org/3/${type}/${movieId}/credits?api_key=${
+            import.meta.env.VITE_TMDB_KEY_VALUE
+          }&language=en-US`
+        );
         this.movieCredits = response.data;
+        console.log("cr: ", this.movieCredits);
       } catch (error) {
-        console.log('error: ', error)
-        throw error
+        console.log("error: ", error);
+        throw error;
       }
     },
-    async fetchMovieDetails(movieId) {
-      this.loading = true
+    async fetchMovieDetails(movieId, type) {
+      this.loading = true;
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movieId}?api_key=${import.meta.env.VITE_TMDB_KEY_VALUE}&language=en-US`
-        )
+          `https://api.themoviedb.org/3/${type}/${movieId}?api_key=${
+            import.meta.env.VITE_TMDB_KEY_VALUE
+          }&language=en-US`
+        );
         this.movieDetails = response.data;
-        this.loading = false
+        this.loading = false;
       } catch (error) {
-        console.log('error: ', error)
-        throw error
+        console.log("error: ", error);
+        throw error;
       }
     },
     // async fetchUsername ()
@@ -50,5 +55,5 @@ export const useMoviePageStore = defineStore('moviePageStore', {
     //     throw error
     //   }
     // }
-  }
-})
+  },
+});
