@@ -6,10 +6,20 @@ const props = defineProps({
     required: true,
   },
 });
+
+//emits
+const emits = defineEmits(["scroll"]);
+
+//methods
+const handleScroll = (event) => {
+  if (event.target.scrollLeft <= 100) emits("scroll", true);
+  else emits("scroll", false);
+};
 </script>
+
 <template>
   <div class="Cards">
-    <div :class="`scrollBox ${props.type}`">
+    <div :class="`scrollBox ${props.type}`" @scroll="handleScroll">
       <slot />
     </div>
   </div>

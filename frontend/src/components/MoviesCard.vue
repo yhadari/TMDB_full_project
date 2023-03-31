@@ -19,11 +19,16 @@ const state = reactive({
   base_url: import.meta.env.VITE_TMDB_BASE_URL,
   size: "original",
   loading: true,
+  scroll: true,
 });
 
 //methods
 const loading = (value) => {
   state.loading = value;
+};
+
+const scroll = (value) => {
+  state.scroll = value;
 };
 
 const moviePage = (movie) => {
@@ -59,14 +64,14 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 </script>
 
 <template>
-  <div class="container">
+  <div :class="`${state.scroll && 'container'}`">
     <ToggleBox
       :title="title"
       :type="type"
       :toggle="toggle.value"
       @loading="loading"
     />
-    <ScrolBox :type="type">
+    <ScrolBox :type="type" @scroll="scroll">
       <div
         :class="`movieCard ${!state.loading && 'hide'} ${
           movies.loading && 'ld'

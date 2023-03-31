@@ -12,11 +12,16 @@ const loading = (value) => {
   state.loading = value;
 };
 
+const scroll = (value) => {
+  state.scroll = value;
+};
+
 // data
 const state = reactive({
   base_url: import.meta.env.VITE_TMDB_BASE_URL,
   size: "original",
   loading: true,
+  scroll: true,
   index: 0,
   vedioPlay: false,
   vedioIndex: 0,
@@ -35,14 +40,14 @@ homePageStore.fetchTrailers("movie");
 </script>
 
 <template>
-  <div class="container">
+  <div :class="`${state.scroll && 'container'}`">
     <ToggleBox
       title="Latest Trailers"
       type="vedio"
       :toggle="vedioToggle"
       @loading="loading"
     />
-    <ScrolBox type="vedio">
+    <ScrolBox type="vedio" @scroll="scroll">
       <div
         :class="`vedioCard ${!state.loading && 'hide'} ${
           homePageStore.vedio.loading && 'ld'
