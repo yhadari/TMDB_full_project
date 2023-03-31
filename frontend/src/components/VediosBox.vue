@@ -44,7 +44,9 @@ homePageStore.fetchTrailers("movie");
     />
     <ScrolBox type="vedio">
       <div
-        :class="`vedioCard ${!state.loading && 'hide'}`"
+        :class="`vedioCard ${!state.loading && 'hide'} ${
+          homePageStore.vedio.loading && 'ld'
+        }`"
         v-for="(vedio, index) in homePageStore.vedio.arr"
         :key="vedio.name"
       >
@@ -156,11 +158,12 @@ homePageStore.fetchTrailers("movie");
   height: 17.8rem;
   min-width: 31.8rem;
   border-radius: 1rem;
-  padding: 0.4rem;
   text-align: center;
   color: #fff;
   font-size: 1.25rem;
   letter-spacing: 0.8px;
+  background-color: hsla(0, 0%, 100%, 0.4);
+  margin-top: 0.6rem;
 }
 .hide {
   visibility: hidden;
@@ -224,18 +227,21 @@ homePageStore.fetchTrailers("movie");
 }
 .loading img {
   width: 6.4rem;
-  opacity: 0.6;
+  opacity: 0.4;
+  animation: fade 2s infinite;
+}
+.ld {
   animation: fade 2s infinite;
 }
 @keyframes fade {
   0% {
-    opacity: 0.6;
+    opacity: 0.4;
   }
   50% {
     opacity: 0;
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.4;
   }
 }
 </style>

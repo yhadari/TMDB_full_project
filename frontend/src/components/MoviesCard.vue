@@ -68,7 +68,9 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
     />
     <ScrolBox :type="type">
       <div
-        :class="`movieCard ${!state.loading && 'hide'}`"
+        :class="`movieCard ${!state.loading && 'hide'} ${
+          movies.loading && 'ld'
+        }`"
         v-for="movie in movies.data"
         :key="movie.id"
       >
@@ -124,6 +126,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
   min-width: 15rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 1rem;
+  background-color: hsla(0, 0%, 100%, 0.4);
 }
 .hide {
   visibility: hidden;
@@ -166,18 +169,21 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 }
 .loading img {
   width: 6.4rem;
-  opacity: 0.6;
+  opacity: 0.4;
+  animation: fade 2s infinite;
+}
+.ld {
   animation: fade 2s infinite;
 }
 @keyframes fade {
   0% {
-    opacity: 0.6;
+    opacity: 0.4;
   }
   50% {
     opacity: 0;
   }
   100% {
-    opacity: 0.6;
+    opacity: 0.4;
   }
 }
 .link {
