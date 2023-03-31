@@ -59,7 +59,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 </script>
 
 <template>
-  <div class="container test">
+  <div class="container">
     <ToggleBox
       :title="title"
       :type="type"
@@ -73,7 +73,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
         :key="movie.id"
       >
         <div class="loading" v-if="movies.loading">
-          <img src="../assets/Rolling.svg" alt="loading" />
+          <img src="../assets/loading.png" alt="loading" />
         </div>
         <router-link :to="moviePage(movie)">
           <img
@@ -103,7 +103,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 </template>
 
 <style scoped>
-.test::after {
+.container::after {
   position: absolute;
   top: 0;
   right: 0;
@@ -120,6 +120,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 .movieCard {
   position: relative;
   height: 22.5rem;
+  width: 15rem;
   min-width: 15rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 1rem;
@@ -164,8 +165,20 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
   justify-content: center;
 }
 .loading img {
-  width: 8rem;
-  opacity: 0.5;
+  width: 6.4rem;
+  opacity: 0.6;
+  animation: fade 2s infinite;
+}
+@keyframes fade {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }
 .link {
   text-decoration: none;

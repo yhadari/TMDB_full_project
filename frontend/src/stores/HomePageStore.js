@@ -5,10 +5,17 @@ export const useHomePageStore = defineStore("homePageStore", {
   state: () => {
     return {
       background: "https://api.lorem.space/image/movie?w=2000&h=980",
-      trending: { data: [], loading: true },
-      popular: { data: [], loading: true },
-      topRated: { data: [], loading: true },
-      vedio: { data: [], urls: [], names: [], arr: [], loading: true },
+      trending: { data: [], loading: true, firstFetch: false },
+      popular: { data: [], loading: true, firstFetch: false },
+      topRated: { data: [], loading: true, firstFetch: false },
+      vedio: {
+        data: [],
+        urls: [],
+        names: [],
+        arr: [],
+        loading: true,
+        firstFetch: false,
+      },
     };
   },
   actions: {
@@ -52,8 +59,10 @@ export const useHomePageStore = defineStore("homePageStore", {
           console.log("error: ", err);
         })
         .finally(() => {
-          this.vedio.loading = false;
-          console.log("data: ", this.vedio);
+          setTimeout(() => {
+            this.vedio.loading = false;
+            this.vedio.firstFetch = true;
+          }, `${this.vedio.firstFetch ? 0 : 500}`);
         });
     },
     fetchTrending(media_type, time_window) {
@@ -71,7 +80,10 @@ export const useHomePageStore = defineStore("homePageStore", {
           console.log("error: ", err);
         })
         .finally(() => {
-          this.trending.loading = false;
+          setTimeout(() => {
+            this.trending.loading = false;
+            this.trending.firstFetch = true;
+          }, `${this.trending.firstFetch ? 0 : 500}`);
         });
     },
     fetchPopular(type) {
@@ -83,14 +95,18 @@ export const useHomePageStore = defineStore("homePageStore", {
           }&language=en-US&page=1`
         )
         .then((res) => {
-          this.popular.data = res.data.results;
+          this.popular.data = res.data.results.filter(
+            (ele) => !ele.title?.toLowerCase().includes("porn")
+          );
         })
         .catch((err) => {
           console.log("error: ", err);
         })
         .finally(() => {
-          this.popular.loading = false;
-          this.vedio.loading = false;
+          setTimeout(() => {
+            this.popular.loading = false;
+            this.popular.firstFetch = true;
+          }, `${this.popular.firstFetch ? 0 : 500}`);
         });
     },
     fetchTopRated(type) {
@@ -108,7 +124,10 @@ export const useHomePageStore = defineStore("homePageStore", {
           console.log("error: ", err);
         })
         .finally(() => {
-          this.topRated.loading = false;
+          setTimeout(() => {
+            this.topRated.loading = false;
+            this.topRated.firstFetch = true;
+          }, `${this.topRated.firstFetch ? 0 : 500}`);
         });
     },
   },

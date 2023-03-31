@@ -6,13 +6,10 @@ import Footer from "./components/Footer.vue";
 <template>
   <TheNavebar />
   <Suspense>
-    <!-- component with nested async dependencies -->
     <template #default>
       <RouterView />
     </template>
-
-    <!-- loading state via #fallback slot -->
-    <template #fallback>Loading ...</template>
+    <template #fallback></template>
   </Suspense>
   <Footer />
 </template>

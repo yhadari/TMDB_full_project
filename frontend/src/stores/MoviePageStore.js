@@ -20,7 +20,6 @@ export const useMoviePageStore = defineStore("moviePageStore", {
           }&language=en-US`
         );
         this.movieCredits = response.data;
-        console.log("cr: ", this.movieCredits);
       } catch (error) {
         console.log("error: ", error);
         throw error;

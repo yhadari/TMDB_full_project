@@ -48,12 +48,10 @@ const toHoursAndMinutes = (totalMinutes) => {
 
 // Fetch movie details
 await moviePageStore.fetchMovieDetails(getId(), getType());
-console.log("res: ", moviePageStore.movieDetails);
 
 toHoursAndMinutes(moviePageStore.movieDetails.runtime);
 
 await moviePageStore.fetchMovieCredits(getId(), getType());
-console.log("credits: ", moviePageStore.movieCredits.cast);
 
 getCast(moviePageStore.movieCredits.crew);
 </script>

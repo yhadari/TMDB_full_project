@@ -24,7 +24,6 @@ const state = reactive({
 
 const vedioPosterHover = (index) => {
   state.index = index;
-  console.log(homePageStore.vedio.arr[index]);
 };
 
 const vedioPosterClick = (index) => {
@@ -50,7 +49,7 @@ homePageStore.fetchTrailers("movie");
         :key="vedio.name"
       >
         <div class="loading" v-if="homePageStore.vedio.loading">
-          <img src="../assets/Rolling.svg" alt="loading" />
+          <img src="../assets/loading.png" alt="loading" />
         </div>
         <div
           class="imageCard"
@@ -224,7 +223,19 @@ homePageStore.fetchTrailers("movie");
   justify-content: center;
 }
 .loading img {
-  width: 8rem;
-  opacity: 0.5;
+  width: 6.4rem;
+  opacity: 0.6;
+  animation: fade 2s infinite;
+}
+@keyframes fade {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.6;
+  }
 }
 </style>
