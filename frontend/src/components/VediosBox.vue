@@ -144,8 +144,9 @@ homePageStore.fetchTrailers("movie");
 }
 .container {
   position: relative;
+  transition: all 0.6s;
 }
-.container:after {
+.container::after {
   position: absolute;
   top: 0;
   right: 0;
