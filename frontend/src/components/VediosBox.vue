@@ -178,6 +178,8 @@ homePageStore.fetchTrailers("movie");
 }
 .imageCard {
   position: relative;
+  width: 100%;
+  height: 100%;
   transition: all 0.3s;
   margin-bottom: 1rem;
 }

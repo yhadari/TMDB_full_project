@@ -186,10 +186,18 @@ getCast(moviePageStore.movieCredits.crew);
               :key="cast.id"
             >
               <img
+                v-if="cast.profile_path"
                 class="moviePoster"
                 :src="`${state.base_url}${state.size}${cast.profile_path}`"
                 alt="movie poster"
               />
+              <img
+                v-else
+                class="moviePoster"
+                src="../assets/profile.jpg"
+                alt="movie poster"
+              />
+              <div class="cast_det"></div>
             </div>
           </ScrolBox>
         </div>
@@ -313,18 +321,27 @@ getCast(moviePageStore.movieCredits.crew);
 }
 .movie_cast_scroll {
   display: flex;
+  height: 30rem;
 }
 .movieCard {
   position: relative;
-  height: 22.5rem;
-  min-width: 15rem;
+  height: 100%;
+  min-width: 13.8rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 1rem;
 }
 .moviePoster {
   width: 100%;
-  height: 100%;
+  height: 17.5rem;
   border-radius: 1rem;
   cursor: pointer;
+  object-fit: cover;
+  object-position: 0 0;
+}
+
+.cast_det {
+  width: 100%;
+  /* height: 12.5rem; */
+  background-color: black;
 }
 </style>

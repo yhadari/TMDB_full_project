@@ -62,7 +62,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           setTimeout(() => {
             this.vedio.loading = false;
             this.vedio.firstFetch = true;
-          }, `${this.vedio.firstFetch ? 0 : 500}`);
+          }, `${this.vedio.firstFetch ? 0 : 300}`);
         });
     },
     fetchTrending(media_type, time_window) {
@@ -83,7 +83,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           setTimeout(() => {
             this.trending.loading = false;
             this.trending.firstFetch = true;
-          }, `${this.trending.firstFetch ? 0 : 500}`);
+          }, `${this.trending.firstFetch ? 0 : 300}`);
         });
     },
     fetchPopular(type) {
@@ -106,7 +106,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           setTimeout(() => {
             this.popular.loading = false;
             this.popular.firstFetch = true;
-          }, `${this.popular.firstFetch ? 0 : 500}`);
+          }, `${this.popular.firstFetch ? 0 : 300}`);
         });
     },
     fetchTopRated(type) {
@@ -127,7 +127,7 @@ export const useHomePageStore = defineStore("homePageStore", {
           setTimeout(() => {
             this.topRated.loading = false;
             this.topRated.firstFetch = true;
-          }, `${this.topRated.firstFetch ? 0 : 500}`);
+          }, `${this.topRated.firstFetch ? 0 : 300}`);
         });
     },
   },
