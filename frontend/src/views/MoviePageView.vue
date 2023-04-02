@@ -341,7 +341,7 @@ getCast(moviePageStore.movieCredits.crew);
 
 .cast_det {
   width: 100%;
-  /* height: 12.5rem; */
+  /* height: 12.5rem;ˇˇ */
   background-color: black;
 }
 </style>
