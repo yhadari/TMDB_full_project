@@ -174,7 +174,7 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 }
 .loading img {
   width: 6.4rem;
-  opacity: 0.4;
+  opacity: 0.7;
   animation: fade 2s infinite;
 }
 .ld {
@@ -182,13 +182,13 @@ else if (props.type === "top_rated") homePageStore.fetchTopRated("movie");
 }
 @keyframes fade {
   0% {
-    opacity: 0.4;
+    opacity: 0.7;
   }
   50% {
-    opacity: 0;
+    opacity: 0.3;
   }
   100% {
-    opacity: 0.4;
+    opacity: 0.7;
   }
 }
 .link {
