@@ -92,8 +92,7 @@ homePageStore.fetchTrailers("movie");
       <div class="vedio_wrap" v-if="state.vedioPlay">
         <div class="vedio_close" @click="state.vedioPlay = false">
           <iframe
-            width="1280"
-            height="720"
+            class="responsive-iframe"
             :src="`https://www.youtube.com/embed/${
               homePageStore.vedio.urls[state.vedioIndex]
             }?autoplay=1`"
@@ -110,9 +109,19 @@ homePageStore.fetchTrailers("movie");
 
 <style scoped>
 .vedio_close {
-  width: 128rem;
+  width: 100%;
   position: relative;
   cursor: pointer;
+  padding-top: 56.25%;
+}
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 }
 .vedio_close::after {
   content: "x";
@@ -120,11 +129,11 @@ homePageStore.fetchTrailers("movie");
   top: 0;
   right: 0;
   transform: translate(50%, -50%);
-  background-color: hsla(0, 0%, 100%, 0.3);
+  background-color: hsla(0, 0%, 100%, 0.2);
   color: #fff;
   border-radius: 50%;
-  height: 3.8rem;
-  width: 3.8rem;
+  height: 3.4rem;
+  width: 3.4rem;
   font-size: 2.4rem;
   text-align: center;
 }
@@ -141,6 +150,7 @@ homePageStore.fetchTrailers("movie");
   z-index: 1000;
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: grayscale(0.4) blur(0.8rem);
+  padding: 12%;
 }
 .container {
   position: relative;
